@@ -13,16 +13,19 @@ components:
 #           - 'MY_ENV=/home/path'
 #         buildContext: .
 #         rootRequired: false
-  - name: creator-ee
-    image:
-      imageName: creator-ee:latest
-      type: dockerimage
-      dockerfile:
-        git:
-          fileLocation: 'Containerfile'
-          checkoutFrom:
-            revision: 'main'
-            remote: 'origin'
-          remotes:
-            'origin': 'https://github.com/ansible/creator-ee'
-        buildContext: .
+#   - name: creator-ee
+#     image:
+#       imageName: creator-ee:latest
+#       type: dockerimage
+#       dockerfile:
+#         git:
+#           fileLocation: 'Containerfile'
+#           checkoutFrom:
+#             revision: 'main'
+#             remote: 'origin'
+#           remotes:
+#             'origin': 'https://github.com/ansible/creator-ee'
+#         buildContext: .
+  - alias: creator-ee
+    image: 'https://quay.io/repository/ansible/creator-ee:latest'
+    type: dockerimage
