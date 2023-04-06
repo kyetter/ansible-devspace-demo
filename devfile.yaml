@@ -29,3 +29,4 @@ components:
   - alias: creator-ee
     image: 'https://quay.io/repository/ansible/creator-ee:latest'
     type: dockerimage
+    memoryLimit: 512Mi
