@@ -15,7 +15,7 @@ components:
 #         rootRequired: false
   - name: creator-ee
     type:
-      image:
+      dockerimage:
         imageName: creator-ee:latest
         dockerfile:
           git:
