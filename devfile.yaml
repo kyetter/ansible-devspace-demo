@@ -12,7 +12,7 @@ components:
         args:
           - 'MY_ENV=/home/path'
         buildContext: .
-        rootRequired: true
+        rootRequired: false
 #   - name: creator-ee
 #     image:
 #       imageName: creator-ee:latest
