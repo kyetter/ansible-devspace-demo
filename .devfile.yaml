@@ -1,0 +1,12 @@
+schemaVersion: 2.2.0
+metadata:
+  name: ansible-demo
+components:
+  - name: tooling-container
+    container:
+      image: quay.io/mloriedo/ansible-creator-ee:latest
+      memoryRequest: 256M
+      memoryLimit: 6Gi
+      cpuRequest: 250m
+      cpuLimit: 2000m
+      args: ['tail', '-f', '/dev/null']
