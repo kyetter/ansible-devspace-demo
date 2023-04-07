@@ -1,0 +1,9 @@
+
+---
+- name: Hello World Playbook
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: print hello World
+      ansible.builtin.debug:
+        msg: "Hello World I am a new commit!"
