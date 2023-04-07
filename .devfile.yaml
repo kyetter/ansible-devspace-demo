@@ -11,3 +11,12 @@ components:
       cpuLimit: 2000m
       args: ['entrypoint']
       # args: ['tail', '-f', '/dev/null']
+commands:
+  - id: entrypoint
+    exec:
+      label: "WORKAROUND to run the entrypoint in Dev Spaces < v3.6"
+      component: tooling-container
+      commandLine: entrypoint
+events:
+  postStart:
+    - entrypoint
