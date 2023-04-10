@@ -6,17 +6,7 @@ components:
     container:
       image: quay.io/mloriedo/ansible-creator-ee:latest
       memoryRequest: 256M
-      memoryLimit: 2Gi
+      memoryLimit: 6Gi
       cpuRequest: 250m
       cpuLimit: 2000m
-      args: ['entrypoint']
-      # args: ['tail', '-f', '/dev/null']
-commands:
-  - id: entrypoint
-    exec:
-      label: "WORKAROUND to run the entrypoint in Dev Spaces < v3.6"
-      component: tooling-container
-      commandLine: entrypoint
-events:
-  postStart:
-    - entrypoint
+      args: ['tail', '-f', '/dev/null']
