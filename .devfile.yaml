@@ -4,16 +4,7 @@ metadata:
 components:
   - name: tooling-container
     container:
-<<<<<<< HEAD
-<<<<<<< HEAD
       image: quay.io/mloriedo/ansible-creator-ee:latest
-=======
-      image: quay.io/ansible/creator-ee:latest
->>>>>>> 833edf0 (Add devfile and extensions.json)
-=======
-      image: quay.io/mloriedo/ansible-creator-ee:latest
-      # image: quay.io/devfile/universal-developer-image:ubi8-latest
->>>>>>> 4c37061 (Added Dockerfile)
       memoryRequest: 256M
       memoryLimit: 6Gi
       cpuRequest: 250m
