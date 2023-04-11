@@ -1,5 +1,5 @@
 {
-  "image": "quay.io/mloriedo/ansible-creator-ee:latest",
+  "image": "quay.io/ansible/creator-ee:latest",
   "features": {
   }
 }
