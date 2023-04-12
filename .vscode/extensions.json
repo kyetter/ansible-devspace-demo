@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "redhat.vscode-yaml",
-        "redhat.ansible"
+        "redhat.ansible",
+        "ms-python.black-formatter"
     ]
 }
