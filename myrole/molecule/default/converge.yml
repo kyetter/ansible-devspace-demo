@@ -2,7 +2,5 @@
 - name: Converge
   hosts: all
   gather_facts: false
-  tasks:
-    - name: "Include test.myrole"
-      ansible.builtin.include_role:
-        name: "test.myrole"
+- name: "Include test.myrole"
+  ansible.builtin.import_playbook: ../../../hello_world.yml

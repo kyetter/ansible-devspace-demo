@@ -9,7 +9,7 @@ driver:
 lint: |
   set -e
   yamllint .
-  ansible-lint
+  ansible-lint ..
 platforms:
   - name: localhost
 provisioner:
@@ -18,11 +18,11 @@ provisioner:
     name: ansible-lint
     enabled: true
   env:
-    ANSIBLE_ROLES_PATH: ${MOLECULE_PROJECT_DIRECTORY}
+    ANSIBLE_ROLES_PATH: ..
 scenario:
   name: default
   test_sequence:
-    # lint
+    - lint
     - syntax
     - prepare
     - converge
