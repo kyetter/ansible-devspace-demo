@@ -1,0 +1,32 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: delegated
+  options: 
+    managed: false
+    ansible_connection_options: {}
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+platforms:
+  - name: localhost
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+    enabled: true
+  env:
+    ANSIBLE_ROLES_PATH: ${MOLECULE_PROJECT_DIRECTORY}
+scenario:
+  name: default
+  test_sequence:
+    # lint
+    - syntax
+    - prepare
+    - converge
+    - idempotence
+    - verify
+verifier:
+  name: ansible
