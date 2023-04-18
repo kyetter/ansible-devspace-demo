@@ -17,8 +17,8 @@ provisioner:
   lint:
     name: ansible-lint
     enabled: true
-  env:
-    ANSIBLE_ROLES_PATH: ..
+  # env:
+  #   ANSIBLE_ROLES_PATH: ..
 scenario:
   name: default
   test_sequence:
