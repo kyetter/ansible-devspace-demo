@@ -1,5 +1,0 @@
----
-# tasks file for myrole
-- name: Hello World
-  ansible.builtin.debug:
-    msg: "Hello World!!"
