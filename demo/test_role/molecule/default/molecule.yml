@@ -1,0 +1,45 @@
+---
+dependency:
+  name: galaxy
+  # When run from a pipeline you can feed in these values as ENV vars
+  # options:
+  #   ignore-certs: false
+  #   ignore-errors: true
+  #   requirements-files: ${COLLECTIONS_ROLE_DIR}/collections.yml
+driver:
+  name: delegated
+  options: 
+    managed: false
+    ansible_connection_options:
+      connection: local
+lint: |
+  set -e
+  yamllint .
+  ansible-lint ..
+platforms:
+  - name: localhost
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+    enabled: true
+  env:
+    # This just says go back a directory and thats your roles path
+    # You can also provide this via pipeline with something like this
+    # ANSIBLE_ROLES_PATH: $COLLECTION_ROLES
+    ANSIBLE_ROLES_PATH: ..
+  inventory:
+    group_vars:
+      all:
+        test_role_file_dest: 'demofile.txt'
+scenario:
+  name: default
+  test_sequence:
+    - lint
+    - syntax
+    - prepare
+    - converge
+    - idempotence
+    - verify
+verifier:
+  name: ansible
