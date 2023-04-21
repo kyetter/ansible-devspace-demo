@@ -6,5 +6,9 @@
   gather_facts: false
   tasks:
   - name: Example assertion
+    ansible.builtin.stat:
+      path: "/etc/motd"
+    register: stat_output
+  - name: Assert That Motd Exists
     ansible.builtin.assert:
-      that: true
+      that: stat_output.stat.exists
