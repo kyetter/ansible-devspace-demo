@@ -1,6 +1,0 @@
----
-- name: 'Test block'
-  hosts: localhost
-  remote_user: root
-  roles:
-    - test_role
