@@ -6,16 +6,12 @@
   no_log: "{{ molecule_no_log }}"
   tasks:
 
-    - name: Ensure python dependencies are installed
-      ansible.builtin.pip:
-        name: "{{ molecule_pip_dependencies }}"
-        state: present
-      when: molecule_pip_dependencies is defined
-
     - name: Create molecule instance as containers
       community.okd.k8s:
+        kubeconfig: "{{ lookup('ansible.builtin.env', 'HOME') }}/.kube/config"
         state: present
         definition: "{{ lookup('template', 'templates/deployment.yml') | from_yaml }}"
+        wait: true
       register: server
       with_items: "{{ molecule_yml.platforms }}"
 

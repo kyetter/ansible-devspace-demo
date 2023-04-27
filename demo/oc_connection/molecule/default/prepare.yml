@@ -1,0 +1,45 @@
+---
+- name: Create
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  no_log: "{{ molecule_no_log }}"
+  tasks:
+
+    - name: Store user ENVs
+      ansible.builtin.set_fact:
+        molecule_user_home_dir: "{{ lookup('ansible.builtin.env', 'HOME') }}"
+        molecule_user_path: "{{ lookup('ansible.builtin.env', 'PATH') }}"
+
+    - name: Create local bin directory
+      ansible.builtin.file:
+        path: "{{ molecule_user_home_dir }}/bin"
+        state: directory
+        mode: 0770
+    
+    - name: Download foo.conf
+      ansible.builtin.get_url:
+        url: http://downloads.openshift-console.svc.cluster.local/amd64/linux/oc
+        dest: "{{ molecule_user_home_dir }}/bin/oc"
+        mode: '0770'
+    
+    - name: Add another bin dir to system-wide $PATH.
+      ansible.builtin.lineinfile:
+        path: "{{ molecule_user_home_dir }}/.bashrc"
+        line: 'PATH=$PATH:{{ molecule_user_home_dir }}/bin'
+        state: present
+
+    # - name: Install oc client
+    #   ansible.builtin.command:
+    #     cmd: |
+    #       mkdir {{ molecule_user_home_dir }}/bin
+    #       && curl -o {{ molecule_user_home_dir }}/bin/oc http://downloads.openshift-console.svc.cluster.local/amd64/linux/oc
+    #       && chmod u+x {{ molecule_user_home_dir }}/bin/oc
+    #       && export PATH={{ molecule_user_path }}:{{ molecule_user_home_dir }}/bin
+    #     creates: "{{ molecule_user_home_dir }}/bin/oc"
+
+    - name: Ensure python dependencies are installed
+      ansible.builtin.pip:
+        name: "{{ molecule_pip_dependencies }}"
+        state: present
+      when: molecule_pip_dependencies is defined
