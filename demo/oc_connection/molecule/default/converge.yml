@@ -1,0 +1,8 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: "Include demo.oc_connection"
+      ansible.builtin.include_role:
+        name: "demo.oc_connection"
