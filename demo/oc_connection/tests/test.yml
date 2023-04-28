@@ -2,9 +2,5 @@
 - name: Simple test case
   hosts: all
   connection: community.okd.oc
-  vars:
-    ansible_oc_pod: ubi8-int
-  tasks:
-
-    - name: Ping test
-      ansible.builtin.ping:
+  roles:
+    - demo.oc_connection

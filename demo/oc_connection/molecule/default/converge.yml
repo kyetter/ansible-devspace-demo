@@ -1,7 +1,7 @@
 ---
 - name: Converge
   hosts: all
-  gather_facts: false
+  gather_facts: true
   connection: community.okd.oc
   tasks:
     - name: "Include demo.oc_connection"
