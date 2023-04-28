@@ -2,6 +2,7 @@
 - name: Converge
   hosts: all
   gather_facts: false
+  connection: community.okd.oc
   tasks:
     - name: "Include demo.oc_connection"
       ansible.builtin.include_role:

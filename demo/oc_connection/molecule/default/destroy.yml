@@ -7,6 +7,15 @@
   tasks:
     # Developer must implement.
 
+    - name: Destroy molecule containers
+      community.okd.k8s:
+        kubeconfig: "{{ lookup('ansible.builtin.env', 'HOME') }}/.kube/config"
+        state: absent
+        definition: "{{ lookup('template', 'templates/deployment.yml') | from_yaml }}"
+        wait: true
+      register: server
+      with_items: "{{ molecule_yml.platforms }}"
+
     # Mandatory configuration for Molecule to function.
 
     - name: Populate instance config

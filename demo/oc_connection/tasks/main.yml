@@ -1,2 +1,13 @@
 ---
 # tasks file for oc_connection
+
+- name: Ping the host
+  ansible.builtin.ping:
+
+- name: Get the hostname
+  ansible.builtin.command: 'cat /etc/hosts'
+  register: junk_test
+
+- name: Debug hosts file
+  ansible.builtin.debug:
+    var: junk_test
