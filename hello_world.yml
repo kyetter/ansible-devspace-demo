@@ -6,8 +6,9 @@
     - name: Print Hello World
       ansible.builtin.debug:
         msg: "Hello World I am a new commit!"
-    - name: Ensure Httpd is installed
+    - name: Ensure Httpd Is Installed
       become: true
-      ansible.builtin.systemd:
-        name: httpd
-        state: started 
+      ansible.builtin.copy:
+        content: "file edited by kathryn"
+        dest: /etc/motd
+        mode: '0666'
