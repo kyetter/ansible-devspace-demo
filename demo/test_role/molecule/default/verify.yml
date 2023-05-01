@@ -1,0 +1,22 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  connection: local
+  gather_facts: false
+  tasks:
+
+    - name: "Verify | Get file information"
+      ansible.builtin.stat:
+        path: "{{ test_role_file_dest }}"
+      register: __test_role_file_stat
+
+    - name: "Verify | Debug file information"
+      ansible.builtin.debug:
+        var: __test_role_file_stat
+
+    - name: "Verify | Example assertion"
+      ansible.builtin.assert:
+        that:
+          - __test_role_file_stat.stat.exists

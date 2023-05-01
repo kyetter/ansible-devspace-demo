@@ -1,6 +1,7 @@
 ---
 - name: Converge
-  hosts: all
+  hosts: localhost
+  connection: local
   gather_facts: false
 - name: "Include test.myrole"
   ansible.builtin.import_playbook: ../../hello_world.yml

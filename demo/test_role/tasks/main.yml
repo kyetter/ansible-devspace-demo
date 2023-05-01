@@ -1,0 +1,16 @@
+---
+# tasks file for test_role
+
+- name: 'Create a file'
+  ansible.builtin.template:
+    dest: "{{ test_role_file_dest }}"
+    src: demofile.txt.j2
+    owner: user
+    group: root
+    mode: 0600
+
+# - name: 'Create file poorly'
+#   ansible.builtin.command:
+#   args:
+#     cmd: "touch {{ test_role_file_dest }}"
+#     creates: "{{ test_role_file_dest }}"
