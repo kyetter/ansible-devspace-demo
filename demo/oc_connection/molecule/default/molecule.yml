@@ -48,9 +48,9 @@ lint: |
 scenario:
   name: default
   test_sequence:
-    # - lint
-    # - syntax
-    # - prepare
+    - lint
+    - syntax
+    - prepare
     - create
     - converge
     - idempotence

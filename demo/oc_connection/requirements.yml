@@ -4,5 +4,3 @@ collections:
     version: 2.4.0
   - name: community.okd
     version: 2.3.0
-  # Requires Hub / RH Token configured
-  # - name: redhat.openshift

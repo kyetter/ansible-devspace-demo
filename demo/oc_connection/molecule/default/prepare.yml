@@ -17,7 +17,7 @@
         state: directory
         mode: 0770
     
-    - name: Download foo.conf
+    - name: Download oc binary from OCP downloads svc endpoint
       ansible.builtin.get_url:
         url: http://downloads.openshift-console.svc.cluster.local/amd64/linux/oc
         dest: "{{ molecule_user_home_dir }}/bin/oc"
@@ -28,15 +28,6 @@
         path: "{{ molecule_user_home_dir }}/.bashrc"
         line: 'PATH=$PATH:{{ molecule_user_home_dir }}/bin'
         state: present
-
-    # - name: Install oc client
-    #   ansible.builtin.command:
-    #     cmd: |
-    #       mkdir {{ molecule_user_home_dir }}/bin
-    #       && curl -o {{ molecule_user_home_dir }}/bin/oc http://downloads.openshift-console.svc.cluster.local/amd64/linux/oc
-    #       && chmod u+x {{ molecule_user_home_dir }}/bin/oc
-    #       && export PATH={{ molecule_user_path }}:{{ molecule_user_home_dir }}/bin
-    #     creates: "{{ molecule_user_home_dir }}/bin/oc"
 
     - name: Ensure python dependencies are installed
       ansible.builtin.pip:
