@@ -7,5 +7,6 @@
       ansible.builtin.copy:
         src: /etc/hosts
         dest: /tmp/hosts-from-controller
+        mode: '0666'
 - name: "Include test.myrole"
-  ansible.builtin.import_playbook: ../../hello_world.yml
+  ansible.builtin.import_playbook: ../../../../playbooks/hello_world.yml
