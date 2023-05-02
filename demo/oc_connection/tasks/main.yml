@@ -1,5 +1,0 @@
----
-# tasks file for oc_connection
-
-- name: Ping the host
-  ansible.builtin.ping:

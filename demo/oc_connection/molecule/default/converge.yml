@@ -1,9 +1,0 @@
----
-- name: Converge
-  hosts: all
-  gather_facts: true
-  connection: community.okd.oc
-  tasks:
-    - name: "Include demo.oc_connection"
-      ansible.builtin.include_role:
-        name: "demo.oc_connection"

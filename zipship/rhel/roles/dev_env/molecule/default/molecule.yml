@@ -1,0 +1,49 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: delegated
+  options: 
+    managed: true
+    ansible_connection_options:
+      connection: local
+platforms:
+  - name: molecule-rhel8-python-39
+    image: registry.redhat.io/rhel8/python-39
+    workingDir: '/tmp'
+  - name: molecule-rhel8-python-38
+    image: registry.redhat.io/rhel8/python-38
+    workingDir: '/tmp'
+provisioner:
+  name: ansible
+  # Failing to write the ansible into /.ansible/tmp
+  config_options:
+    defaults:
+      remote_tmp: '/tmp'
+    # This just says go back a directory and thats your roles path
+    # You can also provide this via pipeline with something like this
+    # ANSIBLE_ROLES_PATH: $COLLECTION_ROLES
+
+    # COLLECTIONS_PATH: ${PROJECT_SOURCE}
+    # ANSIBLE_ROLES_PATH: ${PROJECT_SOURCE}/${MOLECULE_NAMESPACE}
+  inventory:
+    group_vars:
+      all:
+        molecule_namespace: ${WORKSPACE_NAMESPACE}
+        dev_env_user_bin_path: '/tmp/bin'
+verifier:
+  name: ansible
+lint: |
+  set -e
+  yamllint .
+  ansible-lint .
+scenario:
+  name: default
+  test_sequence:
+    - lint
+    - syntax
+    - prepare
+    - create
+    - converge
+    - idempotence
+    - verify

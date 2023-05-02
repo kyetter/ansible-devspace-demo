@@ -1,0 +1,9 @@
+---
+# defaults file for dev_env
+dev_env_user_bin_path: "{{ ansible_env.HOME }}/bin"
+dev_env_binary_downloads:
+  - source: "http://downloads.openshift-console.svc.cluster.local/amd64/linux/oc"
+    filename: "oc"
+    mode: '0770'
+dev_env_pip_dependencies:
+  - kubernetes

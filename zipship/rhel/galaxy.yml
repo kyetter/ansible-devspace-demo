@@ -1,0 +1,20 @@
+---
+namespace: "zipship"
+name: "rhel"
+description: |
+  This collection contains sample code and examples to demonstrate
+  Ansible Test Driven Development on OpenShift
+version: "1.0.0"
+readme: "README.md"
+authors:
+    - "Kathryn Yetter"
+    - "Jeff Pullen <jpullen@redhat.com>"
+dependencies:
+    "kubernetes.core": ">=2.4.0"
+    "community.okd": ">=2.3.0"
+license:
+    - "GPL-3.0-or-later"
+tags:
+    - openshift
+    - development
+repository: "https://github.com/kyetter/ansible-devspace-demo"

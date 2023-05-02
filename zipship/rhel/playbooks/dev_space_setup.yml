@@ -1,0 +1,6 @@
+---
+- name: Configure dev space for Ansible Development
+  hosts: localhost
+  connection: local
+  roles:
+    - zipship.rhel.dev_env

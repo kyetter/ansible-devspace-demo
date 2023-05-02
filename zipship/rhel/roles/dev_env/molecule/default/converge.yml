@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: true
+  connection: community.okd.oc
+  tasks:
+    - name: "Include zipship.rhel.dev_env"
+      ansible.builtin.include_role:
+        name: "zipship.rhel.dev_env"

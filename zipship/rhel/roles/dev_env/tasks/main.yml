@@ -1,0 +1,36 @@
+---
+# tasks file for dev_env
+
+- name: Ping the host
+  ansible.builtin.ping:
+
+- name: Create user bin directory
+  ansible.builtin.file:
+    path: "{{ dev_env_user_bin_path }}"
+    state: directory
+    mode: 0770
+
+- name: Download and install binary dependencies
+  ansible.builtin.get_url:
+    url: "{{ item.source }}"
+    dest: "{{ dev_env_user_bin_path }}/{{ item.filename }}"
+    mode: "{{ item.mode }}"
+  with_items: "{{ dev_env_binary_downloads }}"
+
+- name: Check if .bashrc exists
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+  register: dev_env_bashrc_stat
+
+- name: Persist user bin dir PATH to bashrc
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: 'PATH=$PATH:{{ dev_env_user_bin_path }}'
+    state: present
+  when: dev_env_bashrc_stat.islnk is defined
+
+- name: Ensure python dependencies are installed
+  ansible.builtin.pip:
+    name: "{{ dev_env_pip_dependencies }}"
+    state: present
+  when: dev_env_pip_dependencies is defined
