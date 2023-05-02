@@ -1,0 +1,15 @@
+name: 'Semantic Versioning'
+on:
+  workflow_dispatch:
+  push: 
+    branches: 
+      - main
+  pull_request:
+  
+jobs:
+  semantic_versions:
+    runs-on: ${{ fromJSON('["ubuntu-latest", "self-hosted"]')[github.repository == 'github/docs-internal'] }}
+    steps:
+     - name: Git Semantic Version
+       id: version
+       uses: PaulHatch/semantic-version@v5.0.3
