@@ -1,8 +1,8 @@
 galaxy_info:
   author: "Jeff Pullen <jpullen@redhat.com>"
   namespace: zipship
-  description: Cool description
-  company: acme corp
+  description: "Prepare a dev container with python and binary deps"
+  company: "International Fleet"
 
   license: "GPL-3.0-or-later"
 
@@ -19,7 +19,10 @@ galaxy_info:
   platforms:
   - name: Fedora
     versions:
-    - '37'
+      - '37'
+  - name: EL
+    versions:
+      - '8'
 
   galaxy_tags: []
     # List tags for your role here, one per line. A tag is a keyword that describes
