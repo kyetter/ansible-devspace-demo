@@ -10,3 +10,10 @@ components:
       cpuRequest: 250m
       cpuLimit: 2000m
       args: ['tail', '-f', '/dev/null']
+commands:
+  - name: Prep
+    actions:
+      - type: exec
+        components: tooling-container
+        command: ansible-playbook playbooks/install_oc.yml
+        workdir: /projects/ansible-devspace-demo
