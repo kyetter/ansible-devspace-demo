@@ -11,7 +11,7 @@ components:
       cpuLimit: 2000m
       args: ['tail', '-f', '/dev/null']
 commands:
-  - id: Download oc binary
+  - id: download oc binary
     exec:
       component: tooling-container
       commandLine: 'ansible-playbook playbooks/install_oc.yml'
