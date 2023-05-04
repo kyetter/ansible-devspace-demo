@@ -14,5 +14,5 @@ commands:
   - id: oc
     exec:
       component: tooling-container
-      commandLine: 'ansible-playbook playbooks/install_oc.yml'
-      workingDir: '${PROJECTS_ROOT}'
+      commandLine: '/usr/local/bin/ansible-playbook /projects/ansible-devspace-demo/playbooks/install_oc.yml'
+      workingDir: '/projects/ansible-devspace-demo'
