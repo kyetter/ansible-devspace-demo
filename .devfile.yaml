@@ -19,3 +19,6 @@ commands:
         kind: build
         isDefault: true
       component: tooling-container
+events:
+  postStart:
+    - "oc-install"
