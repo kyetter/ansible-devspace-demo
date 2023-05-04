@@ -4,6 +4,7 @@
 - name: Verify
   hosts: all
   gather_facts: false
+  connection: community.okd.oc
   tasks:
   - name: Example assertion
     ansible.builtin.assert:
