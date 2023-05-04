@@ -11,9 +11,8 @@ components:
       cpuLimit: 2000m
       args: ['tail', '-f', '/dev/null']
 commands:
-  - name: Prep
-    actions:
-      - type: exec
-        components: tooling-container
-        command: ansible-playbook playbooks/install_oc.yml
-        workdir: /projects/ansible-devspace-demo
+  - id: Download oc binary
+    exec:
+      component: tooling-container
+      commandLine: 'ansible-playbook playbooks/install_oc.yml'
+      workingDir: '${PROJECTS_ROOT}'
