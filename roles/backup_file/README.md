@@ -1,4 +1,4 @@
-oc_connection
+backup_file
 =========
 
 Sample role to demonstrate running molecule inside of OpenShift Dev Spaces. Molecule is configured to leverage the downstream API to create containers in the user's devspace namespace. This role does not require elevated permissions or modifications to OpenShift. 
@@ -35,7 +35,7 @@ oc get pods
 Install the required collections:
 
 ```
-ansible-galaxy collection install -r demo/oc_connection/requirements.yml
+ansible-galaxy collection install -r demo/backup_file/requirements.yml
 ```
 
 Role Variables
@@ -61,7 +61,7 @@ Including an example of how to use your role (for instance, with variables passe
     hosts: all
     connection: community.okd.oc
     roles:
-      - demo.oc_connection
+      - backup_file
 
 License
 -------

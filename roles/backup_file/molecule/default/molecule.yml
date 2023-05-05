@@ -50,7 +50,6 @@ scenario:
   test_sequence:
     - lint
     - syntax
-    - prepare
     - create
     - converge
     - idempotence
