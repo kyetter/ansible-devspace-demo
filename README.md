@@ -2,16 +2,16 @@
 
 # Ansible Development on OpenShift DevSpaces
 
-This repository provides a development environment for Ansible playbook creation, Ansible Molecule testing, and Ansible Lint checks using OpenShift DevSpaces.
+This repository provides a development environment for Ansible playbook creation, testing with Molecule, and ansible-lint checks using OpenShift DevSpaces.
 
 ## Summary
 
-This repository contains a `devfile.yaml` file, which defines the development environment for Ansible. The DevSpace created using this `devfile` provides the necessary tools and dependencies for Ansible playbook development, testing with Molecule, and linting with ansible-lint. This could be used in environments where developers do not have easy access to linux systems from which to develop ansible automation content.
+This repository contains a `devfile.yaml` file, which defines the development environment for Ansible. The DevSpace created using this `devfile` provides the necessary tools and dependencies for Ansible playbook development, testing with Molecule, and linting with ansible-lint. This is designed to be used in environments where developers do not have easy access to linux systems from which to develop ansible automation content, but do have OpenShift.
 
 The `devfile.yaml` includes configurations for:
 
-- Ansible (latest version)
-- Ansible Molecule (testing framework for Ansible roles)
+- Ansible
+- Molecule (testing framework for Ansible roles)
 - Ansible Lint (tool for checking best practices and potential issues in Ansible code)
 
 You can use the provided DevSpace to start working on your Ansible projects immediately, without worrying about setting up the development environment manually.
@@ -20,7 +20,9 @@ You can use the provided DevSpace to start working on your Ansible projects imme
 
 To get started with OpenShift DevSpaces, refer to the [OpenShift DevSpaces documentation](https://access.redhat.com/documentation/en-us/red_hat_openshift_dev_spaces/3.5/html/administration_guide/index) for detailed instructions on setting up your development environment and creating your DevSpaces.
 
-## Eclipse Che
+## Base Image Of Devfile
+
+Ultimately we intend to use the [ansible creator image](https://github.com/ansible/creator-ee) as the base image, however there are currently some [technical blockers](https://github.com/eclipse/che/issues/21778) to doing that. The `Dockerfile` in this repo is that of the image we are currently pulling down for reference.
 
 ### GitHub OAuth2
 
@@ -40,7 +42,7 @@ git config --global user.email homer@springfieldpower.com
 ```
 ## Contributing
 
-Contributions to this repository are welcome! If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request. You can ask any questions in the Ansible - ZipShip- WG gchat channel(https://chat.google.com/room/AAAA8cZvmmw?cls=7)
+Contributions to this repository are welcome! If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request. You can ask any questions in the [Ansible-ZipShip-WG gchat channel](https://chat.google.com/room/AAAA8cZvmmw?cls=7)
 
 ## Code of Conduct
 We ask all of our community members and contributors to adhere to the [Ansible code of conduct](http://docs.ansible.com/ansible/latest/community/code_of_conduct.html). If you have questions or need assistance, please reach out to our community team at [codeofconduct@ansible.com](mailto:codeofconduct@ansible.com)   
