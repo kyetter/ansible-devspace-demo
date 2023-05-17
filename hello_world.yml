@@ -5,10 +5,6 @@
   tasks:
     - name: Print Hello World
       ansible.builtin.debug:
-        msg: "Hello World I am a new commit!"
-    - name: Ensure Httpd Is Installed
-      become: true
-      ansible.builtin.copy:
-        content: "file edited by kathryn"
-        dest: /etc/motd
-        mode: '0666'
+        msg: "Hello World"
+    - debug: 
+        msg: "I am poorly written"
