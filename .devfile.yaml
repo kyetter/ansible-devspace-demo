@@ -4,21 +4,27 @@ metadata:
 components:
   - name: tooling-container
     container:
-      image: quay.io/mloriedo/ansible-creator-ee:latest
+      image: docker.io/vsvydenko/udi:ansible
       memoryRequest: 256M
       memoryLimit: 6Gi
       cpuRequest: 250m
       cpuLimit: 2000m
-      args: ['tail', '-f', '/dev/null']
 commands:
-  - id: oc-install
+  - id: molecule-test
     exec:
-      commandLine: '/usr/local/bin/ansible-playbook ${PROJECT_SOURCE}/playbooks/install_oc.yml'
-      workingDir: ${PROJECT_SOURCE}
+      label: "Molecule: Run Scenario for Backup Role"
+      commandLine: 'molecule test'
+      workingDir: ${PROJECTS_ROOT}/ansible-devspace-demo/roles/backup_file
       group:
-        kind: build
+        kind: run
         isDefault: true
       component: tooling-container
-events:
-  postStart:
-    - "oc-install"
+  - id: molecule-verify
+    exec:
+      label: "Molecule: Validate Backup File Role"
+      commandLine: 'molecule test'
+      workingDir: ${PROJECTS_ROOT}/ansible-devspace-demo/roles/backup_file
+      group:
+        kind: run
+        isDefault: true
+      component: tooling-container

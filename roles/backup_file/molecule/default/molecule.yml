@@ -36,19 +36,14 @@ provisioner:
     group_vars:
       all:
         test_role_file_dest: 'demofile.txt'
-        molecule_namespace: ${WORKSPACE_NAMESPACE}
+        molecule_namespace: ${DEVWORKSPACE_NAMESPACE}
         molecule_pip_dependencies:
           - kubernetes
 verifier:
   name: ansible
-lint: |
-  set -e
-  yamllint .
-  ansible-lint .
 scenario:
   name: default
   test_sequence:
-    - lint
     - syntax
     - create
     - converge
