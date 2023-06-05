@@ -4,7 +4,7 @@ metadata:
 components:
   - name: tooling-container
     container:
-      image: docker.io/vsvydenko/udi:ansible
+      image: quay.io/mloriedo/ansible-creator-ee:latest
       memoryRequest: 256M
       memoryLimit: 6Gi
       cpuRequest: 250m
