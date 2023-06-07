@@ -4,7 +4,6 @@
         "redhat.ansible",
         "redhat.yaml",
         "ms-python.python",
-        "ms-python.black-formatter",
-        "redhat.vscode-openshift-connector"
+        "ms-python.black-formatter"
     ]
 }
