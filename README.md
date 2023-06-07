@@ -20,6 +20,10 @@ You can use the provided DevSpace to start working on your Ansible projects imme
 
 To get started with OpenShift DevSpaces, refer to the [OpenShift DevSpaces documentation](https://access.redhat.com/documentation/en-us/red_hat_openshift_dev_spaces/3.5/html/administration_guide/index) for detailed instructions on setting up your development environment and creating your DevSpaces.
 
+## Base Image Of Devfile
+
+Ultimately we intend to use the [ansible creator image](https://github.com/ansible/creator-ee) as the base image, however there are currently some [technical blockers](https://github.com/eclipse/che/issues/21778) to doing that. The `Dockerfile` in this repo is that of the image we are currently pulling down for reference.
+
 ### GitHub OAuth2
 
 The instructions for configuring OAuth2 for GitHub can be found at the following link:
