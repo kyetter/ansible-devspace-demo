@@ -1,0 +1,95 @@
+name: Build and Push Ansible Creator EE Image
+
+on:
+  push:
+    branches:
+      - 'devspaces-[0-9].[0-9]+-rhel-8'
+      - devspaces-3-rhel-8
+
+  workflow_call:
+    secrets:
+      QUAY_USERNAME:
+        required: true
+      QUAY_PASSWORD:
+        required: true
+
+jobs:
+  build_ansible_creator_ee_image:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      
+      - name: "Docker quay.io Login"
+        uses: docker/login-action@v2
+        with:
+          registry: quay.io
+          username: ${{ secrets.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_PASSWORD }}
+
+      - name: Build and push Docker image
+        run: |
+          echo "Branch name: ${{ github.ref }}"
+          branch_name=${{ github.ref }}
+          branch_name=${branch_name#refs/heads/}
+          if [[ $branch_name == "devspaces-3-rhel-8" ]]; then
+            tag="latest"
+          else
+            tag=$(echo "$branch_name" | grep -o '[0-9]\+\.[0-9]\+')
+          fi
+          echo "Tag: $tag"
+          docker buildx build --platform linux/amd64 --tag quay.io/devspaces/ansible-creator-ee:${tag} --push .
+      
+  update_devfile:
+    runs-on: ubuntu-22.04
+    if: github.actor == 'devstudio-release'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          token: ${{secrets.VSVYDENK_GITHUB_TOKEN}}
+     
+      - name: Check Commit Message
+        id: check_message
+        run: |
+          commit_message=$(git log --format=%B -n 1 ${{ github.sha }})
+          prefix="chore(devfile) link v2 devfile to"
+          if [[ $commit_message == "$prefix"* ]]; then
+            echo "update_devfile=true" >> $GITHUB_OUTPUT
+          else
+            echo "update_devfile=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update image in devfile
+        if: steps.check_message.outputs.update_devfile == 'true'
+        run: |
+          echo "Branch name: ${{ github.ref }}"
+          branch_name=${{ github.ref }}
+          branch_name=${branch_name#refs/heads/}
+          if [[ $branch_name == "devspaces-3-rhel-8" ]]; then
+            tag="latest"
+          else
+            tag=$(echo "$branch_name" | grep -o '[0-9]\+\.[0-9]\+')
+          fi
+          echo "Tag: $tag"
+          sed -r -i devfile.yaml -e "s|(image: .+/devspaces/.+):[x0-9.]+|image: quay.io/devspaces/ansible-creator-ee:${tag}|g"
+      
+      - name: Set up Git
+        run: |
+          git config --global user.email "vsvydenk@redhat.com"
+          git config --global user.name "svor"
+
+      - name: Check for Modifications
+        id: check_modifications
+        run: |
+          git diff --quiet || echo "modified=true" >> $GITHUB_OUTPUT
+        
+      - name: Commit and Push Changes
+        if: steps.check_modifications.outputs.modified == 'true'
+        run: |
+          git add .
+          git commit -m "chore(devfile):update tag for Ansible Creator EE image"
+          git push
