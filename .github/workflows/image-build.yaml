@@ -52,19 +52,7 @@ jobs:
         with:
           token: ${{secrets.VSVYDENK_GITHUB_TOKEN}}
      
-      - name: Check Commit Message
-        id: check_message
-        run: |
-          commit_message=$(git log --format=%B -n 1 ${{ github.sha }})
-          prefix="chore(devfile) link v2 devfile to"
-          if [[ $commit_message == "$prefix"* ]]; then
-            echo "update_devfile=true" >> $GITHUB_OUTPUT
-          else
-            echo "update_devfile=false" >> $GITHUB_OUTPUT
-          fi
-
       - name: Update image in devfile
-        if: steps.check_message.outputs.update_devfile == 'true'
         run: |
           echo "Branch name: ${{ github.ref }}"
           branch_name=${{ github.ref }}
