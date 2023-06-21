@@ -1,0 +1,6 @@
+{
+    "vs-kubernetes": {
+        "vscode-kubernetes.kubectl-path.linux": "/home/runner/.local/state/vs-kubernetes/tools/kubectl/kubectl",
+        "vscode-kubernetes.helm-path": "/home/runner/.local/state/vs-kubernetes/tools/helm/linux-amd64/helm",
+    }
+}
