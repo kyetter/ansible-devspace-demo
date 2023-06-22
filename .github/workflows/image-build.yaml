@@ -21,7 +21,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          token: ${{secrets.CHE_BOT_GITHUB_TOKEN}}
+          token: ${{secrets.VSVYDENK_GITHUB_TOKEN}}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -32,8 +32,20 @@ jobs:
           registry: quay.io
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
-
+      
+      - name: Check Commit Message
+        id: check_message
+        run: |
+          commit_message=$(git log --format=%B -n 1 ${{ github.sha }})
+          prefix="chore(devfile):auto-update Ansible Creator EE image"
+          if [[ $commit_message == "$prefix"* ]]; then
+            echo "update_devfile=false" >> $GITHUB_OUTPUT
+          else
+            echo "update_devfile=true" >> $GITHUB_OUTPUT
+          fi
+          
       - name: Build and push Docker image; Update image in devfile
+        if: steps.check_message.outputs.update_devfile == 'true'
         run: |
           echo "Branch name: ${{ github.ref }}"
           branch_name=${{ github.ref }}
@@ -52,11 +64,11 @@ jobs:
           sed -r -i devfile.yaml -e "s|(image: .+devspaces/ansible-creator-ee.+)|image: ${digest}|g"
       - name: Set up Git
         run: |
-          git config --global user.email "che-bot@eclipse.org"
-          git config --global user.name "Che bot"
+          git config --global user.email "vsvydenk@redhat.com"
+          git config --global user.name "Valerii Svydenko"
         
       - name: Commit and Push Changes
         run: |
           git add .
-          git commit -m "chore(devfile):update Ansible Creator EE image"
+          git commit -m "chore(devfile):auto-update Ansible Creator EE image"
           git push
