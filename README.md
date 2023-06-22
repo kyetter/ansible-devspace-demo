@@ -1,4 +1,5 @@
 To get started, simply click the button below...
+
 [![Contribute](https://www.eclipse.org/che/contribute.svg)](https://workspaces.openshift.com/f?url=https://github.com/kyetter/demo/)
 
 # Ansible Development on OpenShift DevSpaces
