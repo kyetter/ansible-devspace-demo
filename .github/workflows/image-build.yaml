@@ -16,7 +16,6 @@ on:
 jobs:
   build_ansible_creator_ee_image:
     runs-on: ubuntu-22.04
-    if: github.actor != 'che-bot'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -45,7 +44,7 @@ jobs:
           fi
           
       - name: Build and push Docker image; Update image in devfile
-        if: steps.check_message.outputs.update_devfile == 'true'
+        if: steps.check_message.outputs.update_devfile == 'true' || github.actor == 'devstudio-release'
         run: |
           echo "Branch name: ${{ github.ref }}"
           branch_name=${{ github.ref }}
@@ -57,19 +56,26 @@ jobs:
           fi
           echo "Tag: $tag"
           docker buildx build --platform linux/amd64 --tag quay.io/devspaces/ansible-creator-ee:${tag} --push .
-          # rewrite devfile to update digest for ansible-creator-ee
           docker pull quay.io/devspaces/ansible-creator-ee:${tag}
+          
+          short_sha=$(docker inspect --format='{{.Id}}' quay.io/devspaces/ansible-creator-ee:$tag | cut -c8-12)
+          echo "Short SHA: $short_sha"
+          docker tag quay.io/devspaces/ansible-creator-ee:${tag} quay.io/devspaces/ansible-creator-ee:${tag}-${short_sha}
+          docker image push --all-tags quay.io/devspaces/ansible-creator-ee
+
+          # rewrite devfile to update digest for ansible-creator-ee
           digest=$(docker inspect --format='{{index .RepoDigests 0}}' quay.io/devspaces/ansible-creator-ee:${tag})
           echo "The image with digest: $digest"
           sed -r -i devfile.yaml -e "s|(image: .+devspaces/ansible-creator-ee.+)|image: ${digest}|g"
+      
       - name: Set up Git
-        if: steps.check_message.outputs.update_devfile == 'true'
+        if: steps.check_message.outputs.update_devfile == 'true' || github.actor == 'devstudio-release'
         run: |
           git config --global user.email "vsvydenk@redhat.com"
           git config --global user.name "Valerii Svydenko"
         
       - name: Commit and Push Changes
-        if: steps.check_message.outputs.update_devfile == 'true'
+        if: steps.check_message.outputs.update_devfile == 'true' || github.actor == 'devstudio-release'
         run: |
           git add .
           git commit -m "chore(devfile):auto-update Ansible Creator EE image"
