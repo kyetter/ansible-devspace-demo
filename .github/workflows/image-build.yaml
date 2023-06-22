@@ -63,11 +63,13 @@ jobs:
           echo "The image with digest: $digest"
           sed -r -i devfile.yaml -e "s|(image: .+devspaces/ansible-creator-ee.+)|image: ${digest}|g"
       - name: Set up Git
+        if: steps.check_message.outputs.update_devfile == 'true'
         run: |
           git config --global user.email "vsvydenk@redhat.com"
           git config --global user.name "Valerii Svydenko"
         
       - name: Commit and Push Changes
+        if: steps.check_message.outputs.update_devfile == 'true'
         run: |
           git add .
           git commit -m "chore(devfile):auto-update Ansible Creator EE image"
