@@ -64,6 +64,7 @@ jobs:
           docker image push --all-tags quay.io/devspaces/ansible-creator-ee
 
           # rewrite devfile to update digest for ansible-creator-ee
+          docker pull quay.io/devspaces/ansible-creator-ee:${tag}
           digest=$(docker inspect --format='{{index .RepoDigests 0}}' quay.io/devspaces/ansible-creator-ee:${tag})
           echo "The image with digest: $digest"
           sed -r -i devfile.yaml -e "s|(image: .+devspaces/ansible-creator-ee.+)|image: ${digest}|g"
