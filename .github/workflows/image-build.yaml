@@ -16,9 +16,12 @@ on:
 jobs:
   build_ansible_creator_ee_image:
     runs-on: ubuntu-22.04
+    if: github.actor != 'che-bot'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          token: ${{secrets.CHE_BOT_GITHUB_TOKEN}}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -30,7 +33,7 @@ jobs:
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image; Update image in devfile
         run: |
           echo "Branch name: ${{ github.ref }}"
           branch_name=${{ github.ref }}
@@ -42,42 +45,18 @@ jobs:
           fi
           echo "Tag: $tag"
           docker buildx build --platform linux/amd64 --tag quay.io/devspaces/ansible-creator-ee:${tag} --push .
-      
-  update_devfile:
-    runs-on: ubuntu-22.04
-    if: github.actor == 'devstudio-release'
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          token: ${{secrets.VSVYDENK_GITHUB_TOKEN}}
-     
-      - name: Update image in devfile
-        run: |
-          echo "Branch name: ${{ github.ref }}"
-          branch_name=${{ github.ref }}
-          branch_name=${branch_name#refs/heads/}
-          if [[ $branch_name == "devspaces-3-rhel-8" ]]; then
-            tag="latest"
-          else
-            tag=$(echo "$branch_name" | grep -o '[0-9]\+\.[0-9]\+')
-          fi
-          echo "Tag: $tag"
-          sed -r -i devfile.yaml -e "s|(image: .+/devspaces/.+):[x0-9.]+|image: quay.io/devspaces/ansible-creator-ee:${tag}|g"
-      
+          # rewrite devfile to update digest for ansible-creator-ee
+          docker pull quay.io/devspaces/ansible-creator-ee:${tag}
+          digest=$(docker inspect --format='{{index .RepoDigests 0}}' quay.io/devspaces/ansible-creator-ee:${tag})
+          echo "The image with digest: $digest"
+          sed -r -i devfile.yaml -e "s|(image: .+devspaces/ansible-creator-ee.+)|image: ${digest}|g"
       - name: Set up Git
         run: |
-          git config --global user.email "vsvydenk@redhat.com"
-          git config --global user.name "svor"
-
-      - name: Check for Modifications
-        id: check_modifications
-        run: |
-          git diff --quiet || echo "modified=true" >> $GITHUB_OUTPUT
+          git config --global user.email "che-bot@eclipse.org"
+          git config --global user.name "Che bot"
         
       - name: Commit and Push Changes
-        if: steps.check_modifications.outputs.modified == 'true'
         run: |
           git add .
-          git commit -m "chore(devfile):update tag for Ansible Creator EE image"
+          git commit -m "chore(devfile):update Ansible Creator EE image"
           git push
