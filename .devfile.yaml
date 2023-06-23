@@ -1,6 +1,15 @@
 schemaVersion: 2.2.0
 metadata:
   name: ansible-demo
+starterProjects:
+  - name: playbook-starter
+    git:
+      remotes:
+        origin: https://github.com/hyperkineticnerd/ansible-playbook-template
+  - name: collection-starter
+    git:
+      remotes:
+        origin: https://github.com/hyperkineticnerd/ansible-collection-template
 components:
   - name: tooling-container
     container:
