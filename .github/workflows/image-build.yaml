@@ -55,10 +55,9 @@ jobs:
             tag=$(echo "$branch_name" | grep -o '[0-9]\+\.[0-9]\+')
           fi
           echo "Tag: $tag"
-          docker buildx build --platform linux/amd64 --tag quay.io/devspaces/ansible-creator-ee:${tag} --push .
-          docker pull quay.io/devspaces/ansible-creator-ee:${tag}
+          image_id=$(docker build -q -t "quay.io/devspaces/ansible-creator-ee:${tag}" .)
           
-          short_sha=$(docker inspect --format='{{.Id}}' quay.io/devspaces/ansible-creator-ee:$tag | cut -c8-12)
+          short_sha=$(echo $image_id | cut -c8-12)
           echo "Short SHA: $short_sha"
           docker tag quay.io/devspaces/ansible-creator-ee:${tag} quay.io/devspaces/ansible-creator-ee:${tag}-${short_sha}
           docker image push --all-tags quay.io/devspaces/ansible-creator-ee
@@ -66,7 +65,6 @@ jobs:
           # rewrite devfile to update digest for ansible-creator-ee
           docker pull quay.io/devspaces/ansible-creator-ee:${tag}
           digest=$(docker inspect --format='{{index .RepoDigests 0}}' quay.io/devspaces/ansible-creator-ee:${tag})
-          echo "The image with digest: $digest"
           sed -r -i devfile.yaml -e "s|(image: .+devspaces/ansible-creator-ee.+)|image: ${digest}|g"
       
       - name: Set up Git
