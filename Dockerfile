@@ -5,11 +5,10 @@ ENV HOME=/home/runner
 
 ## kubectl
 RUN \
+    microdnf install -y which && \
     curl -LO https://dl.k8s.io/release/`curl -LS https://dl.k8s.io/release/stable.txt`/bin/linux/amd64/kubectl && \
     chmod +x ./kubectl && \
     mv ./kubectl /usr/local/bin && \
-    mkdir -p /home/runner/.local/state/vs-kubernetes/tools/kubectl && \
-    ln -s /usr/local/bin/kubectl /home/runner/.local/state/vs-kubernetes/tools/kubectl/kubectl && \
     kubectl version --client 
 
 ## helm
@@ -25,8 +24,6 @@ RUN \
     sha256sum -c "${HELM_TGZ}.sha256sum" 2>&1 | grep OK && \
     tar -zxvf "${HELM_TGZ}" && \
     mv "${HELM_ARCH}"/helm /usr/local/bin/helm && \
-    mkdir -p /home/runner/.local/state/vs-kubernetes/tools/helm/linux-amd64/ && \
-    ln -s /usr/local/bin/helm /home/runner/.local/state/vs-kubernetes/tools/helm/linux-amd64/helm && \
     cd - && \
     rm -rf "${TEMP_DIR}"
 
