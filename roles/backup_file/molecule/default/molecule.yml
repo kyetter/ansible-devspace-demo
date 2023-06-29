@@ -9,16 +9,7 @@ driver:
       connection: local
 platforms:
   - name: molecule-ubi8-init-1
-    image: registry.access.redhat.com/ubi8/ubi-init
-    workingDir: '/tmp'
-  - name: molecule-rhel8-python-39
-    image: registry.redhat.io/rhel8/python-39
-    workingDir: '/tmp'
-  - name: molecule-rhel8-python-38
-    image: registry.redhat.io/rhel8/python-38
-    workingDir: '/tmp'
-  - name: molecule-centos8-stream
-    image: quay.io/centos/centos:stream8
+    image: registry.access.redhat.com/ubi8/ubi-init@sha256:75cb1eb60b9636f8daa584c231db552c1de94006778e7224643804a696f04fad
     workingDir: '/tmp'
 provisioner:
   name: ansible
