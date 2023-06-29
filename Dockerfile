@@ -3,9 +3,13 @@ FROM quay.io/ansible/creator-ee@sha256:c89ecbcf47bfa956a2ed3c4939cd29a53298943c8
 
 ENV HOME=/home/runner
 
+# install kubernetes module required by molecule
+RUN pip3 install kubernetes==26.1.0
+
 ## kubectl
 RUN \
     microdnf install -y which && \
+    microdnf clean all && \
     curl -LO https://dl.k8s.io/release/`curl -LS https://dl.k8s.io/release/stable.txt`/bin/linux/amd64/kubectl && \
     chmod +x ./kubectl && \
     mv ./kubectl /usr/local/bin && \
