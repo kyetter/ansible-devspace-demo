@@ -41,7 +41,18 @@ ansible-galaxy collection install -r demo/backup_file/requirements.yml
 Role Variables
 --------------
 
-The sample role doesn't have any variables. It just runs a simple smoke test to validate the containers are accessible.
+| Name | Required | Default | Type | Description |
+| ------- | -------- | -------- | ---------- | ------------------------|
+| backup_file_source | yes | '/etc/hosts' | string | The file to be backed up |
+| backup_file_dest_folder | yes | '/tmp/backups' | string | The folder where backups are stored |
+| backup_file_dest_suffix | no | '.bak' | string | The suffix to be appended to backup files |
+| backup_file_dest_dir_owner | no | current user id | string | The owner permission for back up folder |
+| backup_file_dest_dir_group | no | current group id | string | The group permission for the back up folder |
+| backup_file_dest_dir_mode | no | '0750' | string | The mode permission for the backup folder |
+| backup_file_dest_owner | no | current user id | string | The owner permission for the backed up file |
+| backup_file_dest_group | no | current group id | string | The group permission for the backed up file |
+| backup_file_dest_mode | no | '0640' | string | The mode permission for the backed up file |
+| backup_file_remote_source | no | true | bool | If the source file exists on the remote system |
 
 Dependencies
 ------------
@@ -60,6 +71,9 @@ Including an example of how to use your role (for instance, with variables passe
   - name: Simple test case
     hosts: all
     connection: community.okd.oc
+    vars:
+      backup_file_source: '/etc/resolv.conf'
+      backup_file_dest_folder: '/tmp/backups'
     roles:
       - backup_file
 

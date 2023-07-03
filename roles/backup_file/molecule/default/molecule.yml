@@ -22,13 +22,12 @@ provisioner:
     # ANSIBLE_ROLES_PATH: $COLLECTION_ROLES
 
     # COLLECTIONS_PATH: ${PROJECT_SOURCE}
-    # ANSIBLE_ROLES_PATH: ${PROJECT_SOURCE}/${MOLECULE_NAMESPACE}
+    # ANSIBLE_ROLES_PATH: ${PROJECT_SOURCE}/${backup_file_molecule_namespace}
   inventory:
     group_vars:
       all:
-        test_role_file_dest: 'demofile.txt'
-        molecule_namespace: ${DEVWORKSPACE_NAMESPACE}
-        molecule_pip_dependencies:
+        backup_file_molecule_namespace: ${DEVWORKSPACE_NAMESPACE}
+        backup_file_molecule_pip_dependencies:
           - kubernetes
 verifier:
   name: ansible

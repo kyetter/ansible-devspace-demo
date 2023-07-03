@@ -31,6 +31,6 @@
 
     - name: Ensure python dependencies are installed
       ansible.builtin.pip:
-        name: "{{ molecule_pip_dependencies }}"
+        name: "{{ backup_file_molecule_pip_dependencies }}"
         state: present
-      when: molecule_pip_dependencies is defined
+      when: backup_file_molecule_pip_dependencies is defined
