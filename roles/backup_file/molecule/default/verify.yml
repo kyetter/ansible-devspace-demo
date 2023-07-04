@@ -26,13 +26,13 @@
           ansible.builtin.stat:
             path: "{{ backup_file_dest_folder }}"
           register: __backup_file_dest_dir_stat
-        
+
         - name: Verifier Backup Created | Assert backup file directory exists
           ansible.builtin.assert:
             that:
-               - __backup_file_dest_dir_stat is defined
-               - __backup_file_dest_dir_stat.stat.exists
-               - __backup_file_dest_dir_stat.stat.isdir
+              - __backup_file_dest_dir_stat is defined
+              - __backup_file_dest_dir_stat.stat.exists
+              - __backup_file_dest_dir_stat.stat.isdir
       rescue:
 
         - name: Verifier Backup Created | Store failure message
@@ -43,14 +43,14 @@
       vars:
         fail_msg: "FAIL - backup destination directory isn't writable at"
       block:
-        
+
         - name: Verifier Backup Created | Assert backup file directory is writable
           ansible.builtin.assert:
             that:
-               - __backup_file_dest_dir_stat is defined
-               - __backup_file_dest_dir_stat.stat.exists
-               - __backup_file_dest_dir_stat.stat.isdir
-               - __backup_file_dest_dir_stat.stat.writeable
+              - __backup_file_dest_dir_stat is defined
+              - __backup_file_dest_dir_stat.stat.exists
+              - __backup_file_dest_dir_stat.stat.isdir
+              - __backup_file_dest_dir_stat.stat.writeable
       rescue:
 
         - name: Verifier Backup Created | Store failure message
@@ -66,13 +66,13 @@
           ansible.builtin.stat:
             path: "{{ backup_file_dest_folder }}/{{ backup_file_source | basename }}{{ backup_file_dest_suffix }}"
           register: __backup_file_dest_stat
-        
+
         - name: Verifier Backup Created | Assert backup file exists and isn't a link
           ansible.builtin.assert:
             that:
-               - __backup_file_dest_stat is defined
-               - __backup_file_dest_stat.stat.exists
-               - not __backup_file_dest_stat.stat.islnk
+              - __backup_file_dest_stat is defined
+              - __backup_file_dest_stat.stat.exists
+              - not __backup_file_dest_stat.stat.islnk
       rescue:
 
         - name: Verifier Backup Created | Store failure message
@@ -80,7 +80,6 @@
             backup_file_verifier_fail: "{{ backup_file_verifier_fail | default([]) + [fail_msg] }}"
 
     - name: Verifier | Check that backup matches source
-      when:
       vars:
         fail_msg: "FAIL - backup file doesn't match source"
       block:
@@ -95,15 +94,15 @@
           ansible.builtin.stat:
             path: "{{ backup_file_source }}"
           register: __backup_file_source_stat
-        
+
         - name: Verifier Backup Created | Assert source and backup file have matching checksums
           ansible.builtin.assert:
             that:
-               - __backup_file_dest_stat is defined
-               - __backup_file_dest_stat.stat.checksum is defined
-               - __backup_file_source_stat is defined
-               - __backup_file_source_stat.stat.checksum is defined
-               - __backup_file_source_stat.stat.checksum == __backup_file_source_stat.stat.checksum
+              - __backup_file_dest_stat is defined
+              - __backup_file_dest_stat.stat.checksum is defined
+              - __backup_file_source_stat is defined
+              - __backup_file_source_stat.stat.checksum is defined
+              - __backup_file_source_stat.stat.checksum == __backup_file_source_stat.stat.checksum
 
       rescue:
 

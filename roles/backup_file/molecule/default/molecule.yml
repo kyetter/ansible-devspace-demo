@@ -3,7 +3,7 @@ dependency:
   name: galaxy
 driver:
   name: delegated
-  options: 
+  options:
     managed: true
     ansible_connection_options:
       connection: local
@@ -17,12 +17,12 @@ provisioner:
   config_options:
     defaults:
       remote_tmp: '/tmp'
-    # This just says go back a directory and thats your roles path
-    # You can also provide this via pipeline with something like this
-    # ANSIBLE_ROLES_PATH: $COLLECTION_ROLES
+      # This just says go back a directory and thats your roles path
+      # You can also provide this via pipeline with something like this
+      # ANSIBLE_ROLES_PATH: $COLLECTION_ROLES
 
-    # COLLECTIONS_PATH: ${PROJECT_SOURCE}
-    # ANSIBLE_ROLES_PATH: ${PROJECT_SOURCE}/${backup_file_molecule_namespace}
+      # COLLECTIONS_PATH: ${PROJECT_SOURCE}
+      # ANSIBLE_ROLES_PATH: ${PROJECT_SOURCE}/${backup_file_molecule_namespace}
   inventory:
     group_vars:
       all:
