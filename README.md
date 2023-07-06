@@ -38,6 +38,29 @@ NOTE: You will still need to configured your name/email globally the first time 
 git config --global user.name "Homer Simpson"
 git config --global user.email homer@springfieldpower.com
 ```
+
+## Sample Molecule Testing Role
+
+A sample role has been provided in the roles/backup_file directory to experiment with Test Driven Development using Molecule and OpenShift DevSpaces. A molecule verifier has been configured to test that the role functions as expected.
+
+### Automation requirements
+1. Make a backup of a file identified using the backup_file_source variable
+2. The backup should be stored in the directory identified by the backup_file_dest_folder variable
+3. If the backup directory doesn't exist, it should be created and writable
+4. The backup file should have a suffix appended such as '.bak' which is identified by the backup_file_dest_suffix variable
+
+### To begin development against the backup_file role
+1. Click the three horizontal bar icon in the top left of the window and select 'Terminal' -> 'New Terminal'
+2. Click into the terminal window
+3. Change directory into roles/backupfile `cd roles/backup_file`
+4. Run `molecule create`. This will start a test pod for the automation to run against (defined in roles/backup_file/molecule/default/molecule.yml).
+5. Run `oc get pods` to view the test instance that was created
+6. Run `molecule verify` to run the verification against the test pod and see the failures to help guide the tasks necessary in the role.
+7. Run `molecule converge` to run the base tasks/main.yml against the pod. This will create a backup of a file in the backup destionation folder with a suffix appended.
+8. Run `molecule converge` to execute the role against the test instance, and `molecule verify` to see if any tests are still failing. Repeate this until all tests pass.
+
+To reset your test pod back to a fresh instance you can run `molecule destroy` and then `molecule create` to recreate it. To run the full molecule test without stepping through each stage, run `molecule test`.
+
 ## Contributing
 
 Contributions to this repository are welcome! If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request. You can ask any questions in the [Ansible-ZipShip-WG gchat channel](https://chat.google.com/room/AAAA8cZvmmw?cls=7)
