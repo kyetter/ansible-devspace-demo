@@ -1,9 +1,0 @@
----
-- name: Converge
-  hosts: all
-  connection: local
-  gather_facts: false
-  tasks:
-    - name: "Include demo.test_role"
-      ansible.builtin.include_role:
-        name: "demo.test_role"
