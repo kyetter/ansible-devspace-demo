@@ -23,7 +23,7 @@ commands:
     exec:
       label: "Molecule: Run Scenario for Backup Role"
       commandLine: 'source $HOME/.bashrc && molecule test'
-      workingDir: ${PROJECTS_ROOT}/ansible-devspaces-demo/roles/backup_file
+      workingDir: ${PROJECTS_ROOT}/ansible-devspaces-demo/collections/example/collection/roles/backup_file
       group:
         kind: run
         isDefault: true
@@ -32,7 +32,7 @@ commands:
     exec:
       label: "Molecule: Validate Backup File Role"
       commandLine: 'source $HOME/.bashrc && molecule verify'
-      workingDir: ${PROJECTS_ROOT}/ansible-devspaces-demo/roles/backup_file
+      workingDir: ${PROJECTS_ROOT}/ansible-devspaces-demo/collections/example/collection/roles/backup_file
       group:
         kind: run
         isDefault: true
