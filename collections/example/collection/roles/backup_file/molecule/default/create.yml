@@ -19,7 +19,7 @@
       ansible.builtin.debug:
         var: server
 
-    - name: Store container information # noqa: no-handler
+    - name: Store container information  # noqa: no-handler
       when: server.changed | default(false) | bool
       block:
 
@@ -27,7 +27,7 @@
           ansible.builtin.set_fact:
             instance_conf_dict: {
               'instance': "{{ item.result.status.containerStatuses[0].name }}",
-              }
+            }
           with_items: "{{ server.results }}"
           register: instance_config_dict
 

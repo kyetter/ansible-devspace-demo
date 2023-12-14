@@ -19,13 +19,13 @@
         path: "{{ molecule_user_home_dir }}/bin"
         state: directory
         mode: 0770
-    
+
     - name: Download oc binary from OCP downloads svc endpoint
       ansible.builtin.get_url:
         url: http://downloads.openshift-console.svc.cluster.local/amd64/linux/oc
         dest: "{{ molecule_user_home_dir }}/bin/oc"
         mode: '0770'
-    
+
     - name: Add another bin dir to system-wide $PATH.
       ansible.builtin.lineinfile:
         path: "{{ molecule_user_home_dir }}/.bashrc"

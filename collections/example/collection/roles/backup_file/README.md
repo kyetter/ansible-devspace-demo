@@ -1,7 +1,7 @@
 backup_file
 =========
 
-Sample role to demonstrate running molecule inside of OpenShift Dev Spaces. Molecule is configured to leverage the downstream API to create containers in the user's devspace namespace. This role does not require elevated permissions or modifications to OpenShift. 
+Sample role to demonstrate running molecule inside of OpenShift Dev Spaces. Molecule is configured to leverage the downstream API to create containers in the user's devspace namespace. This role does not require elevated permissions or modifications to OpenShift.
 
 Requirements
 ------------

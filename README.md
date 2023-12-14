@@ -69,4 +69,4 @@ To reset your test pod back to a fresh instance you can run `molecule destroy` a
 Contributions to this repository are welcome! If you find any issues or have suggestions for improvements, feel free to open an issue with Red Hat.
 
 ## Code of Conduct
-We ask all of our community members and contributors to adhere to the [Ansible code of conduct](http://docs.ansible.com/ansible/latest/community/code_of_conduct.html). If you have questions or need assistance, please reach out to our community team at [codeofconduct@ansible.com](mailto:codeofconduct@ansible.com)   
+We ask all of our community members and contributors to adhere to the [Ansible code of conduct](http://docs.ansible.com/ansible/latest/community/code_of_conduct.html). If you have questions or need assistance, please reach out to our community team at [codeofconduct@ansible.com](mailto:codeofconduct@ansible.com)

@@ -24,14 +24,14 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      
+
       - name: "Docker quay.io Login"
         uses: docker/login-action@v2
         with:
           registry: quay.io
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
-      
+
       - name: Check Commit Message
         id: check_message
         run: |
@@ -42,7 +42,7 @@ jobs:
           else
             echo "update_devfile=true" >> $GITHUB_OUTPUT
           fi
-          
+
       - name: Build and push Docker image; Update image in devfile
         if: steps.check_message.outputs.update_devfile == 'true' || github.actor == 'devstudio-release'
         run: |
@@ -56,7 +56,7 @@ jobs:
           fi
           echo "Tag: $tag"
           image_id=$(docker build -q -t "quay.io/devspaces/ansible-creator-ee:${tag}" .)
-          
+
           short_sha=$(echo $image_id | cut -c8-12)
           echo "Short SHA: $short_sha"
           docker tag quay.io/devspaces/ansible-creator-ee:${tag} quay.io/devspaces/ansible-creator-ee:${tag}-${short_sha}
@@ -66,13 +66,13 @@ jobs:
           docker pull quay.io/devspaces/ansible-creator-ee:${tag}
           digest=$(docker inspect --format='{{index .RepoDigests 0}}' quay.io/devspaces/ansible-creator-ee:${tag})
           sed -r -i devfile.yaml -e "s|(image: .+devspaces/ansible-creator-ee.+)|image: ${digest}|g"
-      
+
       - name: Set up Git
         if: steps.check_message.outputs.update_devfile == 'true' || github.actor == 'devstudio-release'
         run: |
           git config --global user.email "vsvydenk@redhat.com"
           git config --global user.name "Valerii Svydenko"
-        
+
       - name: Commit and Push Changes
         if: steps.check_message.outputs.update_devfile == 'true' || github.actor == 'devstudio-release'
         run: |
