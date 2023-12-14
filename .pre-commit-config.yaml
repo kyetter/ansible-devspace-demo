@@ -17,7 +17,7 @@ repos:
         entry: "ansible-lint"
         args:
           - "--profile=production"
-          - "-c=.ansible-lint.yml"
+          - "-c=.ansible-lint"
         additional_dependencies:
           - "ansible-core>=2.13"
           - "yamllint>=1.29,<2.0"
