@@ -1,10 +1,6 @@
 # .github/workflows/ansible-lint.yml
 name: ansible-lint
 on:
-  push:
-    branches:
-      - main
-      - add_linting_and_pre_commit
   pull_request:
     branches:
       - main
